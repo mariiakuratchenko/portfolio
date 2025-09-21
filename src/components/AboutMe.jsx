@@ -21,7 +21,7 @@ function AboutMe() {
         </div>
       </div>
             <a 
-                href="/MariiaKuratchenkoResume.pdf" 
+                href="https://drive.google.com/file/d/1JD--ZDgnz20jETI-OKQrQMVzu-egqM6X/view?usp=sharing" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="resume-link"
