@@ -1,0 +1,13 @@
+.contact-container h2 {
+    font-size: 2.5em;
+    color: #5e17eb;
+}
+
+.contact-container p {
+    font-size: 1.1em;
+    color: #ffffff;
+}
+
+.contact-container a {
+    color: #5e17eb;
+}

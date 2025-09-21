@@ -6,7 +6,6 @@
   text-align: left;
 }
 
-/* Main content area - align to left */
 .main-content {
   margin-left: 0;
   margin-right: auto;
@@ -59,7 +58,7 @@
 }
 
 .navbar {
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -83,12 +82,11 @@
 
 .navbar a:hover {
   color: #f7d71e;
-  /* yellow highlight color */
 }
 
 .row {
   display: flex;
-  align-items: flex-start; /* Align top since h3 is taller */
+  align-items: flex-start;
   margin-bottom: 20px;
 }
 

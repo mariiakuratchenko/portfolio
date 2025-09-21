@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
+import './CSS/contact.css';
 
 function ContactPage(){
     return(
-        <div>
-            <h2>Contact Me</h2>
+        <div className="contact-container">
+            <h2>My Contact Information</h2>
             <p>mariiakuratchenko@gmail.com</p>
             <p>+1 (437) 234-1331</p>
             <p>Toronto, Ontario, Canada</p>
-            <br/>
-            <h3>Socials</h3>
             <a href="https://github.com/mariiakuratchenko">GitHub</a>
             <br/><br/>
+            <h2>Leave Your Information</h2>
             <ContactForm />
         </div>
     )
@@ -63,6 +63,7 @@ function ContactForm() {
               onChange={handleNameChange}
             />
           </label>
+          <br />
           <label>Enter your surname:
             <input
               type="text" 
@@ -70,6 +71,7 @@ function ContactForm() {
               onChange={handleSurnameChange}
             />
           </label>
+          <br />
           <label>Enter your phone:
             <input
               type="text" 
@@ -77,6 +79,7 @@ function ContactForm() {
               onChange={handlePhoneChange}
             />
           </label>
+          <br />
           <label>Enter your email:
             <input
               type="email" 
@@ -84,13 +87,15 @@ function ContactForm() {
               onChange={handleEmailChange}
             />
           </label>
+          <br />
           <label>Enter your address:
             <input
               type="text" 
               value={address}
               onChange={handleAddressChange}
             />
-          </label>
+          </label>  
+          <br />
           <p>Select what service you interested in:</p>
           <label>
             <input 
@@ -121,6 +126,7 @@ function ContactForm() {
               onChange={handleServiceChange} 
             /> Software Development
           </label>
+          <br />
           <br />
           <button type="submit">Submit</button>
         </form>
