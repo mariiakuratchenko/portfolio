@@ -29,7 +29,7 @@ function AboutMe() {
           rel="noopener noreferrer"
           className="resume-link"
         >
-          📄 View My Resume
+          <h3>📄 View My Resume</h3>
         </a>
       </div>
     </>
