@@ -9,7 +9,6 @@
     text-align: center;
 }
 
-/* Project Card */
 .project-card {
     margin-bottom: 60px;
     padding: 30px;
@@ -33,7 +32,6 @@
     text-align: justify;
 }
 
-/* Project Grid - Horizontal Scroll */
 .project-grid {
     display: flex;
     gap: 25px;
@@ -79,8 +77,6 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-
-/* Responsive Design */
 @media (max-width: 768px) {
     .project-grid {
         gap: 20px;
