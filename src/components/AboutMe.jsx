@@ -1,5 +1,4 @@
 import "./CSS/aboutme.css";
-import {Document} from 'react-pdf';
 
 
 function AboutMe() {
@@ -20,14 +19,15 @@ function AboutMe() {
           </div>
         </div>
       </div>
-            <a 
-                href="https://drive.google.com/file/d/1JD--ZDgnz20jETI-OKQrQMVzu-egqM6X/view?usp=sharing" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="resume-link"
-        >
+      
+      <a 
+        href="https://drive.google.com/file/d/1JD--ZDgnz20jETI-OKQrQMVzu-egqM6X/view?usp=sharing" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="resume-link"
+      >
         📄 View My Resume
-        </a>
+      </a>
     </div>
   );
 }
