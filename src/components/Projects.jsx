@@ -2,21 +2,21 @@ import React from 'react';
 import './CSS/projects.css';
 
 // Project images from public folder
-const photo1 = '/project1/ChasingLuck1.PNG'
-const photo2 = '/project1/ChasingLuck2.PNG'
-const photo3 = '/project1/ChasingLuck3.PNG'
-const photo4 = '/project1/ChasingLuck4.PNG'
+const photo1 = '/project1/ChasingLuck1.png'
+const photo2 = '/project1/ChasingLuck2.png'
+const photo3 = '/project1/ChasingLuck3.png'
+const photo4 = '/project1/ChasingLuck4.png'
 
-const photo5 = '/project2/MajesticHomes1.PNG'
-const photo6 = '/project2/MajesticHomes2.PNG'
-const photo7 = '/project2/MajesticHomes3.PNG'
-const photo8 = '/project2/MajesticHomes4.PNG'
+const photo5 = '/project2/MajesticHomes1.png'
+const photo6 = '/project2/MajesticHomes2.png'
+const photo7 = '/project2/MajesticHomes3.png'
+const photo8 = '/project2/MajesticHomes4.png'
 
-const photo9 = '/project3/GameAssets1.PNG'
-const photo10 = '/project3/GameAssets2.PNG'
-const photo11 = '/project3/GameAssets3.PNG'
-const photo12 = '/project3/GameAssets4.PNG'
-const photo13 = '/project3/GameAssets5.PNG'
+const photo9 = '/project3/GameAssets1.png'
+const photo10 = '/project3/GameAssets2.png'
+const photo11 = '/project3/GameAssets3.png'
+const photo12 = '/project3/GameAssets4.png'
+const photo13 = '/project3/GameAssets5.png'
 
 const projectsData = [
     {
