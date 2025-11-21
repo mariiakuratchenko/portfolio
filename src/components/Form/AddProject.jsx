@@ -20,7 +20,6 @@ const AddProject = () => {
         console.log("Submitting project: ", project);
 
         const submitProject = {
-            id: project.id,
             title: project.title,
             completion: project.completion,
             description: project.description
@@ -30,7 +29,7 @@ const AddProject = () => {
             .then(data => {
                 if (data && data.success) {
                     alert(data.message);
-                    navigate("/project/list");
+                    navigate("/projects");
                 } else {
                     setErrorMsg(data.message);
                 }
