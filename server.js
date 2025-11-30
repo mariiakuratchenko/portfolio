@@ -2,6 +2,7 @@ var express = require('express');
 var createError = require('http-errors');
 var logger = require('morgan');
 var cors = require('cors');
+var path = require('path');
 
 var db = require('./config/db');
 
@@ -20,11 +21,20 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(logger('dev'));
 
-app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/projects', projectsRouter);
 app.use('/api/services', servicesRouter);
 app.use('/api/contacts', contactsRouter);
+app.use('/api', indexRouter);
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    return next(createError(404));
+  }
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 app.use(function(req, res, next) {
   next(createError(404));
