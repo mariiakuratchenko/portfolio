@@ -1,64 +1,62 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProjectModel from "../../datasource/ProjectModel";
-import ProjectForm from "./ProjectForm";
-import { create } from "../../datasource/api-project";
+import ServiceModel from "../../datasource/ServiceModel";
+import ServiceForm from "./ServiceForm";
+import { create } from "../../datasource/api-service";
 
-const AddProject = () => {
+const AddService = () => {
     const navigate = useNavigate();
-    const [project, setProject] = useState(new ProjectModel());
-    const [errorMsg, setErrorMsg] = useState('')
+    const [service, setService] = useState(new ServiceModel());
+    const [errorMsg, setErrorMsg] = useState('');
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setProject((formData) => ({ ...formData, [name]: value }));
+        setService((formData) => ({ ...formData, [name]: value }));
+        setErrorMsg('');
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        console.log("Submitting project: ", project);
+        try {
+            setErrorMsg('');
+            const submitService = {
+                title: service.title,
+                description: service.description
+            };
 
-        const submitProject = {
-            title: project.title,
-            completion: project.completion,
-            description: project.description
-        };
-
-        create(submitProject)
-            .then(data => {
-                if (data && data.success) {
-                    alert(data.message);
-                    navigate("/projects");
-                } else {
-                    setErrorMsg(data.message);
-                }
-            })
-            .catch(err => {
-                setErrorMsg(err.message);
-                console.log(err);
-            });
-    }
+            const data = await create(submitService);
+            if (data && data.success) {
+                alert(data.message);
+                navigate("/services");
+            } else {
+                setErrorMsg(data.message || 'Failed to create service');
+            }
+        } catch (err) {
+            setErrorMsg(err.message || 'Failed to create service');
+            console.error('Error creating service:', err);
+        }
+    };
 
     return (
         <div className="container" style={{ paddingTop: 80 }}>
             <div className="row">
                 <div className="offset-md-3 col-md-6">
-                    <h1>Add Project</h1>
+                    <h1>Add Service</h1>
                     {errorMsg && (
                         <div className="flash" style={{ color: 'red', marginBottom: '10px', padding: '10px', backgroundColor: '#f8d7da', border: '1px solid #f5c6cb', borderRadius: '4px' }}>
                             <span>{errorMsg}</span>
                         </div>
                     )}
-                    <ProjectForm
-                        project={project}
+                    <ServiceForm
+                        service={service}
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                     />
                     <button
                         className="btn btn-secondary"
                         type="button"
-                        onClick={() => navigate("/projects")}
+                        onClick={() => navigate("/services")}
                         style={{
                             padding: '10px 20px',
                             backgroundColor: '#6c757d',
@@ -75,6 +73,7 @@ const AddProject = () => {
             </div>
         </div>
     );
-}
+};
 
-export default AddProject;
+export default AddService;
+

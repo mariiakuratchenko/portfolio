@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './CSS/projects.css';
-import { getAll, deleteProject } from '../datasource/api-project';
+import './CSS/contact.css';
+import { getAll, deleteContact } from '../datasource/api-contact';
 
-function ProjectCard({ project, onDelete, onEdit }) {
-    const formatDate = (dateString) => {
-        if (!dateString) return '';
-        const date = new Date(dateString);
-        return date.toLocaleDateString();
-    };
-
+function ContactCard({ contact, onDelete, onEdit }) {
     return (
-        <div className="project-card" style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
+        <div style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                 <div style={{ flex: 1 }}>
-                    <h4 className="project-title">{project.title}</h4>
-                    <p className="project-description">{project.description}</p>
-                    {project.completion && (
-                        <p style={{ color: '#666', fontSize: '0.9em' }}>
-                            <strong>Completion Date:</strong> {formatDate(project.completion)}
-                        </p>
-                    )}
+                    <h4 style={{ marginBottom: '10px' }}>
+                        {contact.firstname} {contact.lastname}
+                    </h4>
+                    <p><strong>Email:</strong> {contact.email}</p>
                 </div>
                 <div style={{ display: 'flex', gap: '10px', marginLeft: '20px' }}>
                     <button
-                        onClick={() => onEdit(project._id)}
+                        onClick={() => onEdit(contact._id)}
                         style={{
                             padding: '8px 16px',
                             backgroundColor: '#007bff',
@@ -37,7 +28,7 @@ function ProjectCard({ project, onDelete, onEdit }) {
                         Edit
                     </button>
                     <button
-                        onClick={() => onDelete(project._id)}
+                        onClick={() => onDelete(contact._id)}
                         style={{
                             padding: '8px 16px',
                             backgroundColor: '#dc3545',
@@ -55,61 +46,61 @@ function ProjectCard({ project, onDelete, onEdit }) {
     );
 }
 
-function Projects() {
-    const [projects, setProjects] = useState([]);
+function Contacts() {
+    const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        loadProjects();
+        loadContacts();
     }, []);
 
-    const loadProjects = async () => {
+    const loadContacts = async () => {
         try {
             setLoading(true);
             const data = await getAll();
-            setProjects(data);
+            setContacts(data);
             setError('');
         } catch (err) {
-            setError(err.message || 'Failed to load projects');
-            console.error('Error loading projects:', err);
+            setError(err.message || 'Failed to load contacts');
+            console.error('Error loading contacts:', err);
         } finally {
             setLoading(false);
         }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this project?')) {
+        if (window.confirm('Are you sure you want to delete this contact?')) {
             try {
-                await deleteProject(id);
-                setProjects(projects.filter(project => project._id !== id));
+                await deleteContact(id);
+                setContacts(contacts.filter(contact => contact._id !== id));
             } catch (err) {
-                alert(err.message || 'Failed to delete project');
-                console.error('Error deleting project:', err);
+                alert(err.message || 'Failed to delete contact');
+                console.error('Error deleting contact:', err);
             }
         }
     };
 
     const handleEdit = (id) => {
-        navigate(`/editproject/${id}`);
+        navigate(`/editcontact/${id}`);
     };
 
     if (loading) {
         return (
-            <div className="projects-container">
-                <h3>My Projects</h3>
-                <p>Loading projects...</p>
+            <div className="contact-container">
+                <h2>Contacts</h2>
+                <p>Loading contacts...</p>
             </div>
         );
     }
 
     return (
-        <div className="projects-container">
+        <div className="contact-container">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h3>My Projects</h3>
+                <h2>Contacts</h2>
                 <Link
-                    to="/addproject"
+                    to="/contactform"
                     style={{
                         padding: '10px 20px',
                         backgroundColor: '#28a745',
@@ -118,7 +109,7 @@ function Projects() {
                         borderRadius: '4px'
                     }}
                 >
-                    Add New Project
+                    Add New Contact
                 </Link>
             </div>
             {error && (
@@ -126,13 +117,13 @@ function Projects() {
                     {error}
                 </div>
             )}
-            {projects.length === 0 ? (
-                <p>No projects found. <Link to="/addproject">Add your first project</Link></p>
+            {contacts.length === 0 ? (
+                <p>No contacts found. <Link to="/contactform">Add your first contact</Link></p>
             ) : (
-                projects.map((project) => (
-                    <ProjectCard
-                        key={project._id}
-                        project={project}
+                contacts.map((contact) => (
+                    <ContactCard
+                        key={contact._id}
+                        contact={contact}
                         onDelete={handleDelete}
                         onEdit={handleEdit}
                     />
@@ -142,4 +133,5 @@ function Projects() {
     );
 }
 
-export default Projects;
+export default Contacts;
+

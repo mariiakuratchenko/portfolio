@@ -2,9 +2,9 @@ import API_BASE_URL from '../config/api';
 
 export const getAll = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/projects`);
+        const response = await fetch(`${API_BASE_URL}/services`);
         if (!response.ok) {
-            throw new Error('Failed to fetch projects');
+            throw new Error('Failed to fetch services');
         }
         return await response.json();
     } catch (error) {
@@ -14,9 +14,9 @@ export const getAll = async () => {
 
 export const getById = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/projects/${id}`);
+        const response = await fetch(`${API_BASE_URL}/services/${id}`);
         if (!response.ok) {
-            throw new Error('Failed to fetch project');
+            throw new Error('Failed to fetch service');
         }
         return await response.json();
     } catch (error) {
@@ -24,20 +24,20 @@ export const getById = async (id) => {
     }
 };
 
-export const create = async (project) => {
+export const create = async (service) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/projects`, {
+        const response = await fetch(`${API_BASE_URL}/services`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(project)
+            body: JSON.stringify(service)
         });
 
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.message || 'Failed to create project');
+            throw new Error(result.message || 'Failed to create service');
         }
 
         return result;
@@ -46,20 +46,20 @@ export const create = async (project) => {
     }
 };
 
-export const update = async (id, project) => {
+export const update = async (id, service) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/projects/${id}`, {
+        const response = await fetch(`${API_BASE_URL}/services/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(project)
+            body: JSON.stringify(service)
         });
 
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.message || 'Failed to update project');
+            throw new Error(result.message || 'Failed to update service');
         }
 
         return result;
@@ -68,16 +68,16 @@ export const update = async (id, project) => {
     }
 };
 
-export const deleteProject = async (id) => {
+export const deleteService = async (id) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/projects/${id}`, {
+        const response = await fetch(`${API_BASE_URL}/services/${id}`, {
             method: 'DELETE'
         });
 
         const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(result.message || 'Failed to delete project');
+            throw new Error(result.message || 'Failed to delete service');
         }
 
         return result;

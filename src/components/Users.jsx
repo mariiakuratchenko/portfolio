@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './CSS/projects.css';
-import { getAll, deleteProject } from '../datasource/api-project';
+import './CSS/services.css';
+import { getAll, deleteUser } from '../datasource/api-user';
 
-function ProjectCard({ project, onDelete, onEdit }) {
+function UserCard({ user, onDelete, onEdit }) {
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
@@ -11,20 +11,22 @@ function ProjectCard({ project, onDelete, onEdit }) {
     };
 
     return (
-        <div className="project-card" style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
+        <div className="service-card" style={{ marginBottom: '20px', padding: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                 <div style={{ flex: 1 }}>
-                    <h4 className="project-title">{project.title}</h4>
-                    <p className="project-description">{project.description}</p>
-                    {project.completion && (
+                    <h4 style={{ marginBottom: '10px' }}>
+                        {user.firstName} {user.lastName}
+                    </h4>
+                    <p><strong>Email:</strong> {user.email}</p>
+                    {user.created && (
                         <p style={{ color: '#666', fontSize: '0.9em' }}>
-                            <strong>Completion Date:</strong> {formatDate(project.completion)}
+                            <strong>Created:</strong> {formatDate(user.created)}
                         </p>
                     )}
                 </div>
                 <div style={{ display: 'flex', gap: '10px', marginLeft: '20px' }}>
                     <button
-                        onClick={() => onEdit(project._id)}
+                        onClick={() => onEdit(user._id)}
                         style={{
                             padding: '8px 16px',
                             backgroundColor: '#007bff',
@@ -37,7 +39,7 @@ function ProjectCard({ project, onDelete, onEdit }) {
                         Edit
                     </button>
                     <button
-                        onClick={() => onDelete(project._id)}
+                        onClick={() => onDelete(user._id)}
                         style={{
                             padding: '8px 16px',
                             backgroundColor: '#dc3545',
@@ -55,61 +57,61 @@ function ProjectCard({ project, onDelete, onEdit }) {
     );
 }
 
-function Projects() {
-    const [projects, setProjects] = useState([]);
+function Users() {
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        loadProjects();
+        loadUsers();
     }, []);
 
-    const loadProjects = async () => {
+    const loadUsers = async () => {
         try {
             setLoading(true);
             const data = await getAll();
-            setProjects(data);
+            setUsers(data);
             setError('');
         } catch (err) {
-            setError(err.message || 'Failed to load projects');
-            console.error('Error loading projects:', err);
+            setError(err.message || 'Failed to load users');
+            console.error('Error loading users:', err);
         } finally {
             setLoading(false);
         }
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm('Are you sure you want to delete this project?')) {
+        if (window.confirm('Are you sure you want to delete this user?')) {
             try {
-                await deleteProject(id);
-                setProjects(projects.filter(project => project._id !== id));
+                await deleteUser(id);
+                setUsers(users.filter(user => user._id !== id));
             } catch (err) {
-                alert(err.message || 'Failed to delete project');
-                console.error('Error deleting project:', err);
+                alert(err.message || 'Failed to delete user');
+                console.error('Error deleting user:', err);
             }
         }
     };
 
     const handleEdit = (id) => {
-        navigate(`/editproject/${id}`);
+        navigate(`/edituser/${id}`);
     };
 
     if (loading) {
         return (
-            <div className="projects-container">
-                <h3>My Projects</h3>
-                <p>Loading projects...</p>
+            <div className="services-container">
+                <h3>Users</h3>
+                <p>Loading users...</p>
             </div>
         );
     }
 
     return (
-        <div className="projects-container">
+        <div className="services-container">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h3>My Projects</h3>
+                <h3>Users</h3>
                 <Link
-                    to="/addproject"
+                    to="/adduser"
                     style={{
                         padding: '10px 20px',
                         backgroundColor: '#28a745',
@@ -118,7 +120,7 @@ function Projects() {
                         borderRadius: '4px'
                     }}
                 >
-                    Add New Project
+                    Add New User
                 </Link>
             </div>
             {error && (
@@ -126,13 +128,13 @@ function Projects() {
                     {error}
                 </div>
             )}
-            {projects.length === 0 ? (
-                <p>No projects found. <Link to="/addproject">Add your first project</Link></p>
+            {users.length === 0 ? (
+                <p>No users found. <Link to="/adduser">Add your first user</Link></p>
             ) : (
-                projects.map((project) => (
-                    <ProjectCard
-                        key={project._id}
-                        project={project}
+                users.map((user) => (
+                    <UserCard
+                        key={user._id}
+                        user={user}
                         onDelete={handleDelete}
                         onEdit={handleEdit}
                     />
@@ -142,4 +144,5 @@ function Projects() {
     );
 }
 
-export default Projects;
+export default Users;
+
