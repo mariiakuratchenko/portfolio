@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
 function connectDB() {
-    mongoose.connect('mongodb+srv://admin_db_user:dactQ30W7vB4BFtN@cluster001.qxstwe4.mongodb.net/Portfolio');
+    const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://admin_db_user:dactQ30W7vB4BFtN@cluster001.qxstwe4.mongodb.net/Portfolio';
+    
+    mongoose.connect(mongoURI);
 
     let mongodb = mongoose.connection;
 

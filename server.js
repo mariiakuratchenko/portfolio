@@ -27,14 +27,16 @@ app.use('/api/services', servicesRouter);
 app.use('/api/contacts', contactsRouter);
 app.use('/api', indexRouter);
 
-app.use(express.static(path.join(__dirname, 'dist')));
-
-app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api')) {
-    return next(createError(404));
-  }
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.use(express.static(path.join(__dirname, 'dist')));
+  
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next(createError(404));
+    }
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  });
+}
 
 app.use(function(req, res, next) {
   next(createError(404));
@@ -53,9 +55,10 @@ app.use(function(err, req, res, next) {
   );
 });
 
-var port = process.env.PORT || 3000;
-app.listen(port);
-
-console.log(`Server running at http://localhost:${port}/`);
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  var port = process.env.PORT || 3000;
+  app.listen(port);
+  console.log(`Server running at http://localhost:${port}/`);
+}
 
 module.exports = app;
